@@ -5,16 +5,41 @@ const getAll = async () => {
   return tasks;
 };
 
-const creatTask = async (task) =>{
+const createTask = async (task) => {
+  const { title } = task;
+  const dateUTC = new Date(Date.now()).toUTCString();
 
-const{title} = task;
+  const query = "INSERT INTO tasks(title, status, created_at)values(?, ?, ?)";
 
-const query = 'INSERT INTO tasks(tile, status, created_at)values(?, ?, ?)';
+  const [createdTask] = await conection.execute(query, [
+    title,
+    "pendente",
+    dateUTC,
+  ]);
 
-const createdTask = await Connection.execute(query,[title, pendente, ])
-}
+  return { insertId: createdTask.insertId };
+};
+
+const deleteTask = async (id) => {
+  const [removedTask] = await conection.execute(
+    "DELETE FROM tasks WHERE id = ?",
+    [id]
+  );
+  return removedTask;
+};
+
+const updateTask = async (id, task) => {
+  const { title, status } = task;
+
+  const query = "UPDATE tasks SET title = ?, status = ? WHERE id = ? ";
+
+  const [updatedTask] = await conection.execute(query, [title, status, id]);
+  return updatedTask;
+};
 
 module.exports = {
   getAll,
-  creatTask
+  createTask,
+  deleteTask,
+  updateTask,
 };
