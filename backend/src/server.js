@@ -1,3 +1,5 @@
+// criaação do server e configuração da porta 
+
 const app = require('./app');
 require('dotenv').config();
 
