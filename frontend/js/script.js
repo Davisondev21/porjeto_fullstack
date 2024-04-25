@@ -4,6 +4,7 @@ const fetchTasks = async () => {
   const tasks = await response.json();
   return tasks;
 };
+
 const createElement = (tag, innerText = "", innerHTML = "") => {
   const element = document.createElement(tag);
 
@@ -14,25 +15,12 @@ const createElement = (tag, innerText = "", innerHTML = "") => {
   if (innerHTML) {
     element.innerHTML = innerHTML;
   }
-
   return element;
-};
-
-const createSelect = () => {
-  const options = `
-  <option value="pendente">pendente</option>
-  <option value="em andamento">em andamento</option>
-  <option value="concluida">concluida</option>
-  `;
-
-  const select = createElement("select", "", options);
-
-  return select;
 };
 
 const task = {
   id: 1,
-  title: "eu sou o melhor ",
+  title: " Deixa o like no calnal pae",
   created_at: "00 janeiro de 2023 00:12",
   status: "pendente",
 };
@@ -42,38 +30,32 @@ const createRow = (task) => {
 
   const tr = createElement("tr");
   const tdTitle = createElement("td", title);
-  const tdCreatedAr = createElement("td", created_at);
+  const tdCreateAt = createElement("td", created_at);
   const tdStatus = createElement("td");
   const tdActions = createElement("td");
-
-  const select = createElement();
 
   const editButton = createElement(
     "button",
     "",
-    '<span class="material-symbols-outlined">edit</span>'
+    "<span class='material-symbols-outlined'>edit</span>"
   );
   const deleteButton = createElement(
     "button",
     "",
-    '<span class="material-symbols-outlined">delete</span>'
+    "<span class='material-symbols-outlined'>delete  <span>"
   );
 
   editButton.classList.add("btn-action");
   deleteButton.classList.add("btn-action");
 
-  tdStatus.appendChild(select);
-
   tdActions.appendChild(editButton);
   tdActions.appendChild(deleteButton);
 
   tr.appendChild(tdTitle);
-  tr.appendChild(tdCreatedAr);
+  tr.appendChild(created_at);
   tr.appendChild(tdStatus);
   tr.appendChild(tdActions);
-
   tbody.appendChild(tr);
 };
 
 createRow(task);
-
