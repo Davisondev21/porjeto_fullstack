@@ -52,7 +52,7 @@ const createRow = (task) => {
   tdActions.appendChild(deleteButton);
 
   tr.appendChild(tdTitle);
-  tr.appendChild(created_at);
+  tr.appendChild(tdCreateAt);
   tr.appendChild(tdStatus);
   tr.appendChild(tdActions);
   tbody.appendChild(tr);
