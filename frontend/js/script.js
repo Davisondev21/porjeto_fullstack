@@ -18,12 +18,21 @@ const createElement = (tag, innerText = "", innerHTML = "") => {
   return element;
 };
 
-const task = {
-  id: 1,
-  title: " Deixa o like no calnal pae",
-  created_at: "00 janeiro de 2023 00:12",
-  status: "pendente",
-};
+const creatSelect = (value) => {
+const options = `
+  <option value="pendente">pendente</option>
+  <option value="em andamento">em andamento</option>
+  <option value="concluida">concluida</option>
+`;
+
+  const select = createElement ('select', '', options);
+
+  select.value = value
+
+  return select
+}
+
+
 
 const createRow = (task) => {
   const { id, title, created_at, status } = task;
@@ -33,6 +42,8 @@ const createRow = (task) => {
   const tdCreateAt = createElement("td", created_at);
   const tdStatus = createElement("td");
   const tdActions = createElement("td");
+
+const select = creatSelect(status);
 
   const editButton = createElement(
     "button",
@@ -48,6 +59,8 @@ const createRow = (task) => {
   editButton.classList.add("btn-action");
   deleteButton.classList.add("btn-action");
 
+  tdStatus.appendChild(select)
+
   tdActions.appendChild(editButton);
   tdActions.appendChild(deleteButton);
 
@@ -55,7 +68,9 @@ const createRow = (task) => {
   tr.appendChild(tdCreateAt);
   tr.appendChild(tdStatus);
   tr.appendChild(tdActions);
-  tbody.appendChild(tr);
+
+  return tr
 };
 
-createRow(task);
+const loadTasks
+l
