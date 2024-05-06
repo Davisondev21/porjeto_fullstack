@@ -23,11 +23,8 @@ loadTasks()
 inputTask.value = '';
 }
 
-const formatDate = (dateUTC) => {
-  const options = { dateStyle: 'long', timeStyle: 'short' };
- const date = new date(dateUTC).toLocaleString();
- return date;
-}
+
+
 
 const createElement = (tag, innerText = "", innerHTML = "") => {
   const element = document.createElement(tag);
