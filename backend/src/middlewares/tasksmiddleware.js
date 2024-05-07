@@ -1,9 +1,7 @@
 const validateFieldTitle = (request, response, next) => {
   const { body } = request;
 
-  console.log("request: ", request);
-
-  console.log(body);
+ 
 
   if (body.title === undefined) {
     return response
