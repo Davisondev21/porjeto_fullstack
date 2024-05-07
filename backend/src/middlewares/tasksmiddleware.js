@@ -1,6 +1,10 @@
 const validateFieldTitle = (request, response, next) => {
   const { body } = request;
 
+  console.log("request: ", request);
+
+  console.log(body);
+
   if (body.title === undefined) {
     return response
       .status(400)
@@ -32,5 +36,5 @@ const validateFieldStatus = (request, response, next) => {
 
 module.exports = {
   validateFieldTitle,
-  validateFieldStatus
+  validateFieldStatus,
 };

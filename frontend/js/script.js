@@ -1,30 +1,44 @@
 const tbody = document.querySelector("tbody");
-const addForm = document.querySelector('.add-form');
-const inputTask = document.querySelector('.input-task')
+const addForm = document.querySelector(".add-form");
+const inputTask = document.querySelector(".input-task");
 const fetchTasks = async () => {
   const response = await fetch("http://localhost:3333/tasks");
   const tasks = await response.json();
   return tasks;
 };
 
-const addTask =  async (event) => {
-event.preventDefault()
+const addTask = async (event) => {
+  event.preventDefault();
 
-const task = { title: inputTask.value }
+  const task = { title: inputTask.value };
 
-await fetch('http://localhost:3333/tasks', {
-method: 'post', 
-headers: {'content-type': 'application/json'},
-body: JSON.stringify(task),
+  await fetch("http://localhost:3333/tasks", {
+    method: "post",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(task),
+  });
 
-});
+  loadTasks();
+  inputTask.value = "";
+};
 
-loadTasks()
-inputTask.value = '';
-}
+const deleteTask = async (id) => {
+  await fetch(`http://localhost:3333/tasks/${id}`, {
+    method: "delete",
+  });
+  loadTasks();
+};
 
-
-
+const updateTask = async ({ id, title, status }) => {
+  console.log("{ title, status } : ", { title, status });
+  await fetch(`http://localhost:3333/tasks/${id}`, {
+    method: "put",
+    headers: { "content-type": "aplication/json" },
+    // body: JSON.stringify({ title, status }),
+    body: JSON.stringify({ title, status }),
+  });
+  loadTasks();
+};
 
 const createElement = (tag, innerText = "", innerHTML = "") => {
   const element = document.createElement(tag);
@@ -40,31 +54,37 @@ const createElement = (tag, innerText = "", innerHTML = "") => {
 };
 
 const creatSelect = (value) => {
-const options = `
+  const options = `
   <option value="pendente">pendente</option>
   <option value="em andamento">em andamento</option>
   <option value="concluida">concluida</option>
 `;
 
-  const select = createElement ('select', '', options);
+  const select = createElement("select", "", options);
 
-  select.value = value
+  select.value = value;
 
-  return select
-}
-
-
+  return select;
+};
 
 const createRow = (task) => {
   const { id, title, created_at, status } = task;
 
   const tr = createElement("tr");
   const tdTitle = createElement("td", title);
-  const tdCreateAt = createElement("td",created_at);
+  const tdCreateAt = createElement("td", created_at);
   const tdStatus = createElement("td");
   const tdActions = createElement("td");
 
-const select = creatSelect(status);
+  const select = creatSelect(status);
+
+  select.addEventListener("change", ({ target }) =>
+    updateTask({ ...task, status: target.value })
+  );
+
+  // select.addEventListener("change", ({ target }) =>
+  //   console.log({ ...task, status: target.value })
+  // );
 
   const editButton = createElement(
     "button",
@@ -80,7 +100,8 @@ const select = creatSelect(status);
   editButton.classList.add("btn-action");
   deleteButton.classList.add("btn-action");
 
-  tdStatus.appendChild(select)
+  deleteButton.addEventListener("click", () => deleteTask(id));
+  tdStatus.appendChild(select);
 
   tdActions.appendChild(editButton);
   tdActions.appendChild(deleteButton);
@@ -90,20 +111,20 @@ const select = creatSelect(status);
   tr.appendChild(tdStatus);
   tr.appendChild(tdActions);
 
-  return tr
+  return tr;
 };
 
-const  loadTasks = async () => {
+const loadTasks = async () => {
   const tasks = await fetchTasks();
 
-  tbody.innerHTML = '';
+  tbody.innerHTML = "";
 
   tasks.forEach((task) => {
     const tr = createRow(task);
-    tbody.appendChild(tr)
-  })
-}
+    tbody.appendChild(tr);
+  });
+};
 
-addForm.addEventListener('submit', addTask)
+addForm.addEventListener("submit", addTask);
 
 loadTasks();
