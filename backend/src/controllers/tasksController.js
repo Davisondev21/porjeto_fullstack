@@ -1,4 +1,4 @@
-//controle e montagem das rotas 
+//controle e montagem das rotas
 
 const { request, response } = require("express");
 const tasksModel = require("../models/tasksModel");
@@ -9,22 +9,23 @@ const getAll = async (_request, response) => {
 };
 const createTask = async (request, response) => {
   const createdTask = await tasksModel.createTask(request.body);
-  return response.status(201).json(createdTask)
-}; 
+  return response.status(201).json(createdTask);
+};
 
 const deleteTask = async (request, response) => {
-const{ id } = request.params;
+  const { id } = request.params;
 
-await tasksModel.deleteTask(id);
-return response.status(204).json()
-}
+  await tasksModel.deleteTask(id);
+  return response.status(204).json();
+};
 
 const updateTask = async (request, response) => {
+  console.log("body: ", request.body);
 
-  const{ id } = request.params; 
+  const { id } = request.params;
 
-await tasksModel.updateTask(id, request.body);
-return response.status(204).json();
+  await tasksModel.updateTask(id, request.body);
+  return response.status(204).json();
 };
 
 module.exports = {

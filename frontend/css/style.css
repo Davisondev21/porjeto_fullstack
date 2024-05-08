@@ -21,7 +21,7 @@ main{
   width: 100%;
 }
 input{
-  width: 100%;
+  width: 90%;
   flex: 1;
   padding: 15px;
   border: 1px solid #ddd ;

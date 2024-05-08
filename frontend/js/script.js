@@ -30,13 +30,14 @@ const deleteTask = async (id) => {
 };
 
 const updateTask = async ({ id, title, status }) => {
-  console.log("{ title, status } : ", { title, status });
+
   await fetch(`http://localhost:3333/tasks/${id}`, {
     method: "put",
-    headers: { "content-type": "aplication/json" },
-    // body: JSON.stringify({ title, status }),
+    headers: { 'Content-type': 'application/json' },
     body: JSON.stringify({ title, status }),
+    
   });
+
   loadTasks();
 };
 
@@ -82,9 +83,6 @@ const createRow = (task) => {
     updateTask({ ...task, status: target.value })
   );
 
-  // select.addEventListener("change", ({ target }) =>
-  //   console.log({ ...task, status: target.value })
-  // );
 
   const editButton = createElement(
     "button",
@@ -96,6 +94,23 @@ const createRow = (task) => {
     "",
     "<span class='material-symbols-outlined'>delete  <span>"
   );
+
+const editForm = createElement('form');
+const editInput = createElement('input');
+
+editInput.value = title
+editForm.appendChild(editInput);
+
+editForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  updateTask({ id, title: editInput.value, status  });
+});
+
+editButton.addEventListener('click', () => {
+  tdTitle.innerText = '';
+  tdTitle.appendChild(editForm);
+} )
 
   editButton.classList.add("btn-action");
   deleteButton.classList.add("btn-action");

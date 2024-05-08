@@ -1,8 +1,6 @@
 const validateFieldTitle = (request, response, next) => {
   const { body } = request;
 
- 
-
   if (body.title === undefined) {
     return response
       .status(400)
