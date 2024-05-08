@@ -2,7 +2,7 @@ const tbody = document.querySelector("tbody");
 const addForm = document.querySelector(".add-form");
 const inputTask = document.querySelector(".input-task");
 const fetchTasks = async () => {
-  const response = await fetch("http://localhost:3333/tasks");
+  const response = await fetch(`${API}/tasks`);
   const tasks = await response.json();
   return tasks;
 };
@@ -12,7 +12,7 @@ const addTask = async (event) => {
 
   const task = { title: inputTask.value };
 
-  await fetch("http://localhost:3333/tasks", {
+  await fetch(`${API}/tasks`, {
     method: "post",
     headers: { "content-type": "application/json" },
     body: JSON.stringify(task),
@@ -23,14 +23,14 @@ const addTask = async (event) => {
 };
 
 const deleteTask = async (id) => {
-  await fetch(`http://localhost:3333/tasks/${id}`, {
+  await fetch(`${API}tasks/${id}`, {
     method: "delete",
   });
   loadTasks();
 };
 
 const updateTask = async ({ id, title, status }) => {
-
+  
   await fetch(`http://localhost:3333/tasks/${id}`, {
     method: "put",
     headers: { 'Content-type': 'application/json' },
@@ -143,3 +143,4 @@ const loadTasks = async () => {
 addForm.addEventListener("submit", addTask);
 
 loadTasks();
+
