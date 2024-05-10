@@ -7,6 +7,19 @@ const fetchTasks = async () => {
   return tasks;
 };
 
+function search() {
+  let input = document.getElementById('searchbar').value;
+  input = input.toLowerCase();
+  let x = document.getElementsByClassName('animals');
+  for(i = 0; i < x.length; i++){
+    if(!x[i].innerHTML.toLowerCase().includes(input)){
+      x[i].style.display = "none";
+    } else {
+      x[i].style.display = "list-item";
+    }
+  }
+}
+
 const addTask = async (event) => {
   event.preventDefault();
 
@@ -23,15 +36,15 @@ const addTask = async (event) => {
 };
 
 const deleteTask = async (id) => {
-  await fetch(`${API}tasks/${id}`, {
+  await fetch(`${API}/tasks/${id}`, {
     method: "delete",
   });
   loadTasks();
 };
 
 const updateTask = async ({ id, title, status }) => {
-  
-  await fetch(`http://localhost:3333/tasks/${id}`, {
+
+  await fetch(`${API}/tasks/${id}`, {
     method: "put",
     headers: { 'Content-type': 'application/json' },
     body: JSON.stringify({ title, status }),
@@ -143,4 +156,3 @@ const loadTasks = async () => {
 addForm.addEventListener("submit", addTask);
 
 loadTasks();
-
