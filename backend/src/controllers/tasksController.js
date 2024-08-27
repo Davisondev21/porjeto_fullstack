@@ -20,7 +20,7 @@ const deleteTask = async (request, response) => {
 };
 
 const updateTask = async (request, response) => {
-  console.log("body: ", request.body);
+  console.log("body:", request.body);
 
   const { id } = request.params;
 
